@@ -57,57 +57,6 @@ class BroadwayExtensionTest extends ExtensionTestCase
     /**
      * @test
      */
-    public function it_enables_the_simple_command_bus()
-    {
-        $configuration = ['command_handling' => ['logger' => false]];
-
-        $this->load($this->extension, $configuration);
-        $this->assertDICAliasClass('broadway.command_handling.command_bus', 'Broadway\CommandHandling\SimpleCommandBus');
-    }
-
-    /**
-     * @test
-     */
-    public function it_enables_the_logging_command_bus()
-    {
-        $configuration = ['command_handling' => ['logger' => 'service']];
-
-        $this->load($this->extension, $configuration);
-        $this->assertDICAliasClass('broadway.command_handling.command_bus', 'Broadway\CommandHandling\EventDispatchingCommandBus');
-    }
-
-    /**
-     * @test
-     */
-    public function it_creates_an_auditing_logger_alias()
-    {
-        $configuration = ['command_handling' => ['logger' => 'service']];
-
-        $this->load($this->extension, $configuration);
-
-        $auditingLoggerAlias = $this->container->getAlias('broadway.auditing.logger');
-        $this->assertEquals('service', (string) $auditingLoggerAlias);
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_enable_the_event_dispatching_command_bus_but_not_the_logger()
-    {
-        $configuration = ['command_handling' => ['dispatch_events' => true, 'logger' => false]];
-
-        $this->load($this->extension, $configuration);
-
-        $this->assertSame(
-            'broadway.command_handling.event_dispatching_command_bus',
-            (string) $this->container->getAlias('broadway.command_handling.command_bus')
-        );
-        $this->assertFalse($this->container->hasDefinition('broadway.auditing.command_logger'));
-    }
-
-    /**
-     * @test
-     */
     public function it_has_dbal_as_default_event_store()
     {
         $this->load($this->extension, array());
