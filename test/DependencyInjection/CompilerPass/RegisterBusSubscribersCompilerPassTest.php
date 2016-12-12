@@ -88,5 +88,4 @@ class RegisterBusSubscribersCompilerPassTest extends AbstractCompilerPassTestCas
     {
         $this->markTestSkipped('see self::it_throws_when_no_event_bus_service_defined_or_aliased');
     }
-
 }
